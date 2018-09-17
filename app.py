@@ -6,7 +6,7 @@ import json
 
 server = flask.Flask(__name__)
 server.secret_key = os.environ.get('secret_key', str(randint(0, 1000000)))
-bot_id = 'c16cfe66242b8d31fb901bce3e'
+bot_id = '48761c6a5ecbd6c713c2c670ee'
 
 @server.route('/', methods=['POST'])
 def webhook():
