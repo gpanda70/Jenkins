@@ -14,10 +14,11 @@ def webhook():
     reply('cool cool cool...')
 
 def reply(msg):
-	url = 'https://api.groupme.com/v3/bots/post'
-	template = {
-		'bot_id'		: bot_id,
-		'text'			: msg
-	}
+    url = 'https://api.groupme.com/v3/bots/post'
+    template = {
+        'bot_id' : bot_id,
+        'text' : msg,
+        'attachments' : []
+    }
     headers = {'content-type': 'application/json'}
     response = requests.post("https://api.groupme.com/v3/bots/post", data=json.dumps(template), headers=headers)
