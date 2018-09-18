@@ -1,6 +1,7 @@
 import flask
 import os
 from random import randint
+from src.respond import reply
 
 server = flask.Flask(__name__)
 server.secret_key = os.environ.get('secret_key', str(randint(0, 1000000)))
@@ -16,7 +17,8 @@ def webhook():
     message = flask.request.get_json()  # This function contains a
 
     if message['sender_type'] != 'bot':
-        reply(message['text'])
+        reply(bot_id, message['text'])
+
 
     return "ok", 200
 
