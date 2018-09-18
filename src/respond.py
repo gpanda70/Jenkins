@@ -21,7 +21,7 @@ def is_command(msg):
     command = msg.split()[0]
 
     #Parses out commands.txt file
-    with open(command.txt) as f:
+    with open('command.txt') as f:
         for line in f:
             content.append(line)
 
