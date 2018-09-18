@@ -12,7 +12,7 @@ bot_id = '48761c6a5ecbd6c713c2c670ee'
 def webhook():
     message = flask.request.get_json()
 
-    if message['name'] != 'jenkins':
+    if message['sender_type'] != 'bot':
         reply(message['text'])
         print('wsss')
 
@@ -29,5 +29,4 @@ def reply(msg):
     response = requests.post(url, data=json.dumps(template), headers=headers)
 
 if __name__ == "__main__":
-    reply('test message.')
     server.run()
