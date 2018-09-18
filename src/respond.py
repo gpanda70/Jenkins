@@ -8,9 +8,10 @@ def reply(bot_id, msg):
 
     if is_command(msg) == True:
         command = msg.split()[0][1:]
-        run_module(bot_id, command)
+        response = run_module(command)
+        send_post(bot_id, response, url)
     else:
-        send_post('This command does not exist.')
+        send_post(bot_id,'This command does not exist.',url)
 
 
 def is_command(msg):
@@ -29,13 +30,13 @@ def is_command(msg):
     else:
         return False
 
-def run_module(bot_id, command):
+def run_module(command):
     module = import_module('src.commands.%s' % (command))
     importlib.reload(module)
     response = module.main(command)
-    send_post(response)
+    return response
 
-def send_post(bot_id, msg):
+def send_post(bot_id, msg, url):
         template = {
             'bot_id' : bot_id,
             'text' : msg,
