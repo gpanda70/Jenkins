@@ -1,32 +1,25 @@
 import flask
 import os
 from random import randint
-import requests
-import json
 
 server = flask.Flask(__name__)
 server.secret_key = os.environ.get('secret_key', str(randint(0, 1000000)))
-bot_id = '48761c6a5ecbd6c713c2c670ee'
+bot_id = os.getenv('bot_id')
 
 @server.route('/', methods=['POST'])
 def webhook():
-    message = flask.request.get_json()
+    """
+    This function is called whenever the app's callback URL receives a POST request.
+    In other words whenever a message is sent.
+
+    """
+    message = flask.request.get_json()  # This function contains a
 
     if message['sender_type'] != 'bot':
         reply(message['text'])
-        print('wsss')
 
     return "ok", 200
 
-def reply(msg):
-    url = 'https://api.groupme.com/v3/bots/post'
-    template = {
-        'bot_id' : bot_id,
-        'text' : msg,
-        'attachments' : []
-    }
-    headers = {'content-type': 'application/json'}
-    response = requests.post(url, data=json.dumps(template), headers=headers)
 
 if __name__ == "__main__":
     server.run()
