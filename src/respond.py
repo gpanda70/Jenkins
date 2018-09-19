@@ -16,7 +16,7 @@ def reply(bot_id, msg):
         response = run_module(command, arg)
         split_message_send(bot_id, response, url)
     elif msg[0]=='-':
-        split_message_send(bot_id,'This command does not exist.',url)
+        send_post(bot_id,'This command does not exist.',url)
     else:
         return
 
@@ -54,15 +54,18 @@ def send_post(bot_id, msg, url):
         response = requests.post(url, data=json.dumps(template), headers=headers)
 
 def split_message_send(bot_id, msg, url):
-    loops = int(math.ceil(len(msg) / 1000))
-    start=0
-    end=1000
+    if len(msg)<=1000:
+        send_post(bot_id, msg, url)
+    else:
+        loops = int(math.ceil(len(msg) / 1000))
+        start=0
+        end=1000
 
-    for loop in range(0,loops):
-        send_post(bot_id, msg[start:end], url)
-        start=end
+        for loop in range(0,loops):
+            send_post(bot_id, msg[start:end], url)
+            start=end
 
-        if end+1000<len(msg):
-            end = end+1000
-        else:
-            end = len(msg) - 1
+            if end+1000<len(msg):
+                end = end+1000
+            else:
+                end = len(msg) - 1
