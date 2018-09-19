@@ -3,3 +3,4 @@ venv
 .DS_Store
 .env
 Procfile.windows
+test.py
