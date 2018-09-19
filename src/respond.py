@@ -10,8 +10,10 @@ def reply(bot_id, msg):
         command = msg.split()[0][1:]
         response = run_module(command)
         send_post(bot_id, response, url)
-    else:
+    elif msg[0]=='-':
         send_post(bot_id,'This command does not exist.',url)
+    else:
+        continue
 
 
 def is_command(msg):
@@ -21,9 +23,10 @@ def is_command(msg):
     command = msg.split()[0]
 
     #Parses out commands.txt file
-    with open('command.txt') as f:
+    filename = (os.path.join(os.path.dirname(__file__), 'command.txt'))
+    with open(filename) as f:
         for line in f:
-            content.append(line)
+            content.append(line.rstrip('\r\n'))
 
     if command[0]=='-' and command[1:] in content:
         return True
