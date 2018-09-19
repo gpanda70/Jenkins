@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import importlib
 from importlib import import_module
 
 def reply(bot_id, msg):
