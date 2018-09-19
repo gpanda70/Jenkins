@@ -19,7 +19,7 @@ def return_summary(wiki_obj):
     elif page.exists() and check_disambiguous(wiki_obj, page):
         return('Re-enter your wikipedia search. It is ambiguous.\n\n%s' %(page.text))
     else:
-        return('This page doesn\'t exist')
+        return('%s doesn\'t exist' % (wiki_obj))
 
 def check_disambiguous(wiki_obj, wiki_page):
     """This functions checks if wikipedia article is disambiguous"""

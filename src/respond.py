@@ -11,6 +11,7 @@ def reply(bot_id, msg):
     if is_command(msg) == True:
         command = msg.split()[0][1:]
         arg = msg.split()[1:]
+        arg = ' '.join(arg)
         response = run_module(command, arg)
         send_post(bot_id, response, url)
     elif msg[0]=='-':
@@ -39,7 +40,7 @@ def is_command(msg):
 def run_module(command, arg):
     module = import_module('src.commands.%s' % (command))
     importlib.reload(module)
-    response = module.main(command)
+    response = module.main(arg)
     return response
 
 def send_post(bot_id, msg, url):
