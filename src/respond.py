@@ -9,7 +9,8 @@ def reply(bot_id, msg):
 
     if is_command(msg) == True:
         command = msg.split()[0][1:]
-        response = run_module(command)
+        arg = msg.split()[1:]
+        response = run_module(command, arg)
         send_post(bot_id, response, url)
     elif msg[0]=='-':
         send_post(bot_id,'This command does not exist.',url)
@@ -34,7 +35,7 @@ def is_command(msg):
     else:
         return False
 
-def run_module(command):
+def run_module(command, arg):
     module = import_module('src.commands.%s' % (command))
     importlib.reload(module)
     response = module.main(command)
