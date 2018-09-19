@@ -13,7 +13,7 @@ def reply(bot_id, msg):
     elif msg[0]=='-':
         send_post(bot_id,'This command does not exist.',url)
     else:
-        continue
+        return
 
 
 def is_command(msg):
