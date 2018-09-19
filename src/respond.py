@@ -13,9 +13,9 @@ def reply(bot_id, msg):
         arg = msg.split()[1:]
         arg = ' '.join(arg)
         response = run_module(command, arg)
-        send_post(bot_id, response, url)
+        split_message_send(bot_id, response, url)
     elif msg[0]=='-':
-        send_post(bot_id,'This command does not exist.',url)
+        split_message_send(bot_id,'This command does not exist.',url)
     else:
         return
 
@@ -51,3 +51,17 @@ def send_post(bot_id, msg, url):
         }
         headers = {'content-type': 'application/json'}
         response = requests.post(url, data=json.dumps(template), headers=headers)
+
+def split_message_send(bot_id, msg, url):
+    loops = int(math.ceil(len(msg) / 1000))
+    start=0
+    end=1000
+
+    for loop in range(0,loops):
+        send_post(bot_id, msg[start:end], url)
+        start=end
+
+        if end+1000<len(msg):
+            end = end+1000
+        else:
+            end = len(msg) - 1

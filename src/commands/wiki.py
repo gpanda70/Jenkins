@@ -5,7 +5,7 @@ import time
 
 def main(wiki_obj):
     response = return_summary(wiki_obj)
-    return response[0:400]
+    return response
 
 def return_summary(wiki_obj):
     """This function returns a summary of a wikipedia page"""
