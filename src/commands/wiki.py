@@ -30,4 +30,4 @@ def check_disambiguous(wiki_obj, wiki_page):
     else:
         return False
 
-return_summary('Osborn')
+#return_summary('Osborn')
