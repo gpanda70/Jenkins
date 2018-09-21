@@ -27,32 +27,33 @@ You need to install [Heroku Client](https://devcenter.heroku.com/articles/gettin
 * Now clone this repository
 
 
-    git clone <url>
+        git clone <url>
 
 
 * Login to heroku and create a Heroku application
 
 
-    heroku login  
+        heroku login  
 
 
-    heroku create {name of app}
+        heroku create {name of app}
 
 
 * Now link your heroku app to your local repository
 
 
-    git remote add heroku git@heroku.com:{app name}.git
+        git remote add heroku git@heroku.com:{app name}.git
+
 
 * Set up Env Variables
 
 
-    heroku config:set bot_id={your groupme bot id}
+        heroku config:set bot_id={your groupme bot id}
 
 
 * Now you should be able push your repo to Heroku
 
 
-    git add .
-    git commit -m {message}
-    git push heroku master
+        git add .
+        git commit -m {message}
+        git push heroku master
