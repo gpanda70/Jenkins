@@ -11,8 +11,10 @@ def get_img_link(url):
     try:
         r = requests.get(url, headers={"User-Agent":"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"})  # Added this header because websites will change content with default python header
         bs = BeautifulSoup(r.text, 'lxml')
+
         img_div = (bs.find('div', class_ = 'rg_meta'))
         img_link = json.loads(img_div.text)['ou']
+
         return(img_link)
 
     except AttributeError:

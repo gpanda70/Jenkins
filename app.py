@@ -3,6 +3,7 @@ import os
 from random import randint
 from src.respond import reply
 
+# Global Variables
 server = flask.Flask(__name__)
 server.secret_key = os.environ.get('secret_key', str(randint(0, 1000000)))
 bot_id = os.getenv('bot_id')
@@ -19,9 +20,7 @@ def webhook():
     if message['sender_type'] != 'bot':
         reply(bot_id, message['text'])
 
-
     return "ok", 200
-
 
 if __name__ == "__main__":
     server.run()
