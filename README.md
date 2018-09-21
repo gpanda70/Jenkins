@@ -19,7 +19,14 @@ Jenkins is a Heroku cloud-enabled bot capable of multiple commands.
 
     -img {arg}
 
--img returns the first google image search result of your arg
+-img returns the first google image search result of your arg.
+
+
+#### -help
+
+    -help
+
+-help sends you to this github.
 
 ## Installation
 You need to install [Heroku Client](https://devcenter.heroku.com/articles/getting-started-with-python)
