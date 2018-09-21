@@ -4,3 +4,4 @@ venv
 .env
 Procfile.windows
 test.py
+debug.log
