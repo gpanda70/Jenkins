@@ -21,6 +21,11 @@ Jenkins is a Heroku cloud-enabled bot capable of multiple commands.
 
 -img returns the first google image search result of your arg.
 
+#### -gif
+
+    -gif {arg}
+    -gif -random {arg}
+-gif returns a gif or a random gif from giphy
 
 #### -help
 
@@ -56,6 +61,7 @@ You need to install [Heroku Client](https://devcenter.heroku.com/articles/gettin
 
 
         heroku config:set bot_id={your groupme bot id}
+        heroku config:set giphy_api_key={your giphy api key}
 
 
 * Now you should be able push your repo to Heroku
