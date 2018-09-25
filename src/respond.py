@@ -18,7 +18,7 @@ def reply(bot_id, msg):
         if isinstance(response, list):
             for r in response:
                 gif = {'type': 'image', 'url': r}
-                send_post(bot_id, url, gif=r)
+                send_post(bot_id, url, gif=gif)
         else:
             split_message_send(bot_id, url, response)
     elif msg[0]=='-':
