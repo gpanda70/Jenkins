@@ -10,6 +10,10 @@ def reply(bot_id, msg):
 
     url = 'https://api.groupme.com/v3/bots/post'
 
+    # If the groupme message is a command it first split the text.
+    # Next, it runs the command and stores the response to the command.
+    # It then checks if the response returns a list(multiple images) or a single response.
+    # It then sends a POST request to your group.
     if is_command(msg) == True:
         command = msg.split()[0][1:]
         arg = msg.split()[1:]
@@ -19,7 +23,8 @@ def reply(bot_id, msg):
         # Checks to see if response is a list of urls
         if isinstance(response, list):
             for r in response:
-                gif = {'type': 'image', 'url': r}
+                png = image_service_process(r)
+                gif = {'type': 'image', 'url': png}
                 send_post(bot_id, url, gif=gif)
         else:
             split_message_send(bot_id, url, response)
@@ -89,3 +94,22 @@ def split_message_send(bot_id, url, msg=''):
                 end = end+1000
             else:
                 end = len(msg) - 1
+
+def image_service_process(gif_link, num):
+    """This function processes a list of images through Groupme's image service"""
+    access_token = os.getenv('access_token')
+
+    with open(os.path.join(os.path.dirname(__file__), 'image{}.png'.format(num)),'wb') as handle:
+        r = requests.get(gif_link,stream=True)
+        for block in response.iter_content(1024):
+            handle.write(block)
+
+    with open(os.path.join(os.path.dirname(__file__), 'image{}.png'.format(num)),'rb') as handle:
+        data = handle
+
+    headers = {'X-Access-Token': access_token,'Content-Type': 'image/png'}
+    gif_response = requests.post('https://image.groupme.com/pictures', headers=headers, data=data)
+
+    png_link = json.loads(g_response.content)['payload']['picture_url']
+    #payload = {'type': 'image', 'url': png}
+    return(png)
