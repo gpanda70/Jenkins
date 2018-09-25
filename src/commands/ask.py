@@ -4,7 +4,6 @@ import wolframalpha
 
 
 wolfram_api_key = os.getenv('wolfram_api_key')
-wolfram_api_key = '8PRKPU-6WW4PQA2TA'
 client = wolframalpha.Client(wolfram_api_key)
 
 def main(msg):
