@@ -7,7 +7,6 @@ import json
 
 api_instance = giphy_client.DefaultApi()
 giphy_api_key = os.getenv('giphy_api_key')
-giphy_api_key = 'P8wB6ABePbQwQG8DhwMtAt9g0PTJKybP'
 
 def main(msg):
     if msg.split()[0] == '-random':
