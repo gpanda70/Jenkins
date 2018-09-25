@@ -49,13 +49,13 @@ def run_module(command, arg):
 def send_post(bot_id, msg, url):
     """Sends post request,containing command response, to the Groupme-Chat"""
 
-        template = {
-            'bot_id' : bot_id,
-            'text' : msg,
-            'attachments' : []
-        }
-        headers = {'content-type': 'application/json'}
-        response = requests.post(url, data=json.dumps(template), headers=headers)
+    template = {
+        'bot_id' : bot_id,
+        'text' : msg,
+        'attachments' : []
+    }
+    headers = {'content-type': 'application/json'}
+    response = requests.post(url, data=json.dumps(template), headers=headers)
 
 def split_message_send(bot_id, msg, url):
     """
