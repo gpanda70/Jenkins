@@ -15,7 +15,7 @@ def main(msg):
         random = ' '.join(random[1:])
         gif = get_random_gif(random)
     else:
-        gif = get_gif(norm_msg)
+        gif = get_gif(msg)
     return gif
 
 def get_gif(gif_query):
