@@ -17,11 +17,14 @@ def search(msg):
     if response['@success'] == 'false':
         return ('This question cannot be resolved')
     else:
-        result = ''
+        png_result = []
+        result = []
         pod0 = response['pod'][0]  # This is the question asked
         pod1 = response['pod'][1]  # This pod might contain the answer
         pod2 = response['pod'][2]  # This pod might contain the answer
         #print(json.dumps(pod0, indent=4))
         #print(json.dumps(pod1, indent=4))
         result = [pod0['subpod']['img']['@src'], pod1['subpod']['img']['@src'], pod2['subpod']['img']['@src']]
-        return(result)
+        for r in result:
+            png_result.append(r.replace('/gif','/png'))
+        return(png_result)

@@ -15,6 +15,8 @@ def reply(bot_id, msg):
         arg = msg.split()[1:]
         arg = ' '.join(arg)
         response = run_module(command, arg)
+
+        # Checks to see if response is a list of urls
         if isinstance(response, list):
             for r in response:
                 gif = {'type': 'image', 'url': r}

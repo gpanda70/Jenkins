@@ -31,6 +31,8 @@ def get_gif(gif_query):
         gif = api_response.data[0]
         gif_url = gif.images.downsized.url
         return(gif_url)
+    except IndexError as e:
+        return('No gif exists for your query.')
     except ApiException as e:
         return ('Exception when calling DefaultApi->gifs_search_get: %s\n' %e)
     except AttributeError as e:
@@ -44,6 +46,8 @@ def get_random_gif(gif_query):
         gif = api_response.data
         gif_url = gif.fixed_height_downsampled_url
         return(gif_url)
+    except IndexError as e:
+        return('No gif exists for your query.')
     except ApiException as e:
         return ('Exception when calling DefaultApi->gifs_random_get: %s\n' %e)
     except AttributeError as e:
