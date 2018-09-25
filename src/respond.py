@@ -15,9 +15,13 @@ def reply(bot_id, msg):
         arg = msg.split()[1:]
         arg = ' '.join(arg)
         response = run_module(command, arg)
-        split_message_send(bot_id, response, url)
+        if isinstance(response, list):
+            for r in response:
+                send_post(bot_id, url, gif=r)
+        else:
+            split_message_send(bot_id, url, response)
     elif msg[0]=='-':
-        send_post(bot_id,'This command does not exist.\nCheck -help',url)
+        send_post(bot_id, url, msg='This command does not exist.\nCheck -help')
     else:
         return
 
@@ -46,32 +50,32 @@ def run_module(command, arg):
     response = module.main(arg)
     return response
 
-def send_post(bot_id, msg, url):
+def send_post(bot_id, url, msg='', gif=None):
     """Sends post request,containing command response, to the Groupme-Chat"""
 
     template = {
         'bot_id' : bot_id,
         'text' : msg,
-        'attachments' : []
+        'attachments' : [gif]
     }
     headers = {'content-type': 'application/json'}
     response = requests.post(url, data=json.dumps(template), headers=headers)
 
-def split_message_send(bot_id, msg, url):
+def split_message_send(bot_id, url, msg=''):
     """
         Sends post request, containing command response, to the groupme
         when the length of the message is greater than 10000
     """
 
     if len(msg)<=1000:
-        send_post(bot_id, msg, url)
+        send_post(bot_id, url, msg=msg)
     else:
         loops = int(math.ceil(len(msg) / 1000))
         start=0
         end=1000
 
         for loop in range(0,loops):
-            send_post(bot_id, msg[start:end], url)
+            send_post(bot_id, url, msg[start:end] )
             start=end
 
             if end+1000<len(msg):
