@@ -17,6 +17,7 @@ def reply(bot_id, msg):
         response = run_module(command, arg)
         if isinstance(response, list):
             for r in response:
+                gif = {'type': 'image', 'url': r}
                 send_post(bot_id, url, gif=r)
         else:
             split_message_send(bot_id, url, response)
