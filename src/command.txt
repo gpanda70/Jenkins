@@ -2,3 +2,4 @@ img
 wiki
 help
 gif
+ask

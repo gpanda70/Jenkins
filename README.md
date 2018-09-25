@@ -25,7 +25,14 @@ Jenkins is a Heroku cloud-enabled bot capable of multiple commands.
 
     -gif {arg}
     -gif -random {arg}
+
 -gif returns a gif or a random gif from giphy
+
+#### -ask
+
+    -ask {arg}
+
+-ask returns an answer for your question using wolframalpha
 
 #### -help
 
