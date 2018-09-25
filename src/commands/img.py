@@ -24,4 +24,4 @@ def get_img_link(url):
     except requests.exceptions.TooManyRedirects:
         return('The URL for the first image is bad. Contact James. He thought this might happen, but was too lazy to implement a fix.')
     except requests.exceptions.RequestException as e:
-        return('Catastrophic error :(')
+        return('Catastrophic error')

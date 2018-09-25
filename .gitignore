@@ -5,3 +5,4 @@ venv
 Procfile.windows
 test.py
 debug.log
+data_pull.py

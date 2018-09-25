@@ -7,6 +7,7 @@ from importlib import import_module
 
 def reply(bot_id, msg):
     """This function responds to a user request"""
+
     url = 'https://api.groupme.com/v3/bots/post'
 
     if is_command(msg) == True:
@@ -19,7 +20,6 @@ def reply(bot_id, msg):
         send_post(bot_id,'This command does not exist.',url)
     else:
         return
-
 
 def is_command(msg):
     """Determines if the message is a command"""
@@ -39,12 +39,16 @@ def is_command(msg):
         return False
 
 def run_module(command, arg):
+    """Imports the module that stores the commands and runs it"""
+
     module = import_module('src.commands.%s' % (command))
     importlib.reload(module)
     response = module.main(arg)
     return response
 
 def send_post(bot_id, msg, url):
+    """Sends post request,containing command response, to the Groupme-Chat"""
+
         template = {
             'bot_id' : bot_id,
             'text' : msg,
@@ -54,6 +58,11 @@ def send_post(bot_id, msg, url):
         response = requests.post(url, data=json.dumps(template), headers=headers)
 
 def split_message_send(bot_id, msg, url):
+    """
+        Sends post request, containing command response, to the groupme
+        when the length of the message is greater than 10000
+    """
+
     if len(msg)<=1000:
         send_post(bot_id, msg, url)
     else:
