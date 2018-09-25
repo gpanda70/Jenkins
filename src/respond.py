@@ -53,10 +53,14 @@ def run_module(command, arg):
 def send_post(bot_id, url, msg='', gif=None):
     """Sends post request,containing command response, to the Groupme-Chat"""
 
+    attachment = []
+    if gif:
+        attachment.append(gif)
+
     template = {
         'bot_id' : bot_id,
         'text' : msg,
-        'attachments' : [gif]
+        'attachments' : attachment
     }
     headers = {'content-type': 'application/json'}
     response = requests.post(url, data=json.dumps(template), headers=headers)
