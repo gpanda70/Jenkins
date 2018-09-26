@@ -101,7 +101,7 @@ def image_service_process(gif_link, num):
 
     with open(os.path.join(os.path.dirname(__file__), 'ask_images/image{}.png'.format(num)),'wb') as handle:
         r = requests.get(gif_link,stream=True)
-        for block in response.iter_content(1024):
+        for block in r.iter_content(1024):
             handle.write(block)
 
     with open(os.path.join(os.path.dirname(__file__), 'ask_images/image{}.png'.format(num)),'rb') as handle:
