@@ -106,10 +106,9 @@ def image_service_process(gif_link, num):
 
     with open(os.path.join(os.path.dirname(__file__), 'ask_images/image{}.png'.format(num)),'rb') as handle:
         data = handle
+        headers = {'X-Access-Token': access_token,'Content-Type': 'image/png'}
+        gif_response = requests.post('https://image.groupme.com/pictures', headers=headers, data=data)
 
-    headers = {'X-Access-Token': access_token,'Content-Type': 'image/png'}
-    gif_response = requests.post('https://image.groupme.com/pictures', headers=headers, data=data)
-
-    png_link = json.loads(g_response.content)['payload']['picture_url']
+    png_link = json.loads(gif_response.content)['payload']['picture_url']
     #payload = {'type': 'image', 'url': png}
     return(png)

@@ -4,7 +4,6 @@ import wolframalpha
 
 
 wolfram_api_key = os.getenv('wolfram_api_key')
-wolfram_api_key = '8PRKPU-6WW4PQA2TA'
 client = wolframalpha.Client(wolfram_api_key)
 
 def main(msg):
@@ -23,9 +22,22 @@ def search(msg):
         pod0 = response['pod'][0]  # This is the question asked
         pod1 = response['pod'][1]  # This pod might contain the answer
         pod2 = response['pod'][2]  # This pod might contain the answer
-        #print(json.dumps(pod0, indent=4))
-        #print(json.dumps(pod1, indent=4))
-        result = [pod0['subpod']['img']['@src'], pod1['subpod']['img']['@src'], pod2['subpod']['img']['@src']]
-        for r in result:
-            png_result.append(r.replace('/gif','/png'))
-        return(png_result)
+        print(json.dumps(pod0, indent=4))
+        print(json.dumps(pod1, indent=4))
+        print(json.dumps(pod2, indent=4))
+
+        pods = [pod0, pod1, pod2]
+        try:
+            result = [resolve_ls_or_dict(pod) for pod in pods ]
+            print(result)
+            for r in result:
+                png_result.append(r.replace('/gif','/png'))
+            return(png_result)
+        except TypeError as e:
+            return('JSON indice error. Report this!\n.James needs to check log reports.\nConsole output: %s'%e )
+
+def resolve_ls_or_dict(pod):
+    if isinstance(pod['subpod'], list):
+        return pod['subpod'][0]['img']['@src']
+    else:
+        return pod['subpod']['img']['@src']
