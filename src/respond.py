@@ -111,4 +111,4 @@ def image_service_process(gif_link, num):
 
     png_link = json.loads(gif_response.content)['payload']['picture_url']
     #payload = {'type': 'image', 'url': png}
-    return(png)
+    return(png_link)
