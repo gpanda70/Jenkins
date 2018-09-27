@@ -4,6 +4,7 @@ from giphy_client.rest import ApiException
 import time
 import requests
 import json
+from src.error import meme_error
 
 api_instance = giphy_client.DefaultApi()
 giphy_api_key = os.getenv('giphy_api_key')
@@ -32,7 +33,7 @@ def get_gif(gif_query):
         gif_url = gif.images.downsized.url
         return(gif_url)
     except IndexError as e:
-        return('No gif exists for your query.')
+        return('No gif exists for your query.\n\n%s' %(meme_error))
     except ApiException as e:
         return ('Exception when calling DefaultApi->gifs_search_get: %s\n' %e)
     except AttributeError as e:
@@ -47,7 +48,7 @@ def get_random_gif(gif_query):
         gif_url = gif.fixed_height_downsampled_url
         return(gif_url)
     except IndexError as e:
-        return('No gif exists for your query.')
+        return('No gif exists for your query.\n\n%s' %(meme_error))
     except ApiException as e:
         return ('Exception when calling DefaultApi->gifs_random_get: %s\n' %e)
     except AttributeError as e:

@@ -96,14 +96,19 @@ def split_message_send(bot_id, url, msg=''):
                 end = len(msg) - 1
 
 def image_service_process(gif_link, num):
-    """This function processes a list of images through Groupme's image service"""
+    """
+        This function saves the wolframalpha image and processes them
+        through Groupme's image service.
+    """
     access_token = os.getenv('access_token')
 
+    # Saves the Wolfram image to ask_images directory
     with open(os.path.join(os.path.dirname(__file__), 'ask_images/image{}.png'.format(num)),'wb') as handle:
         r = requests.get(gif_link,stream=True)
         for block in r.iter_content(1024):
             handle.write(block)
 
+    # Opens the Wolfram image and then sends it to the Groupme Image Service.
     with open(os.path.join(os.path.dirname(__file__), 'ask_images/image{}.png'.format(num)),'rb') as handle:
         data = handle
         headers = {'X-Access-Token': access_token,'Content-Type': 'image/png'}
