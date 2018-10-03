@@ -12,8 +12,8 @@ def main(msg):
          'returns random gif from giphy.',
          'returns an answer for your question using wolframalpha.',
          'returns this help menu']
-    h_menu = ('Source Code on https://github.com/gpanda70/Jenkins\nDisclaimer: This will look ugly on mobile.\nGo to github link for pretty answers.\n' + '-'*77)
+    h_menu = ('Disclaimer: This will look ugly on mobile.\nGo to github link for pretty answers.\nSource Code on ʕ•ᴥ•ʔ https://github.com/gpanda70/Jenkins ʕ•ᴥ•ʔ\n' + '-'*50)
     for i,j in zip(x,y):
-        h_menu += ('\n{:<20} {:>12}'.format(i,j))
+        h_menu += ('\n{} {:>12}'.format(i,j))
     return(h_menu)
-main('')
+print(main(''))
