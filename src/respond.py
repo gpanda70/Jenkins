@@ -5,6 +5,7 @@ import math
 import importlib
 from importlib import import_module
 
+
 def reply(bot_id, msg):
     """This function responds to a user request"""
 
@@ -23,15 +24,16 @@ def reply(bot_id, msg):
         # Checks to see if response is a list of urls
         if isinstance(response, list):
             for num, r in enumerate(response):
-                png = image_service_process(r,num+1)
+                png = image_service_process(r, num+1)
                 gif = {'type': 'image', 'url': png}
                 send_post(bot_id, url, gif=gif)
         else:
             split_message_send(bot_id, url, response)
-    elif msg[0]=='-':
+    elif msg[0] == '-':
         send_post(bot_id, url, msg='This command does not exist.\nCheck -help')
     else:
         return
+
 
 def is_command(msg):
     """Determines if the message is a command"""
