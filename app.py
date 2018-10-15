@@ -8,6 +8,7 @@ server = flask.Flask(__name__)
 server.secret_key = os.environ.get('secret_key', str(randint(0, 1000000)))
 bot_id = os.getenv('bot_id')
 
+
 @server.route('/', methods=['POST'])
 def webhook():
     """
@@ -20,6 +21,7 @@ def webhook():
         reply(bot_id, message['text'])
 
     return "ok", 200
+
 
 if __name__ == "__main__":
     server.run()
