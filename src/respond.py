@@ -117,7 +117,9 @@ def image_service_process(gif_link, num):
             handle.write(block)
 
     # Opens the Wolfram image and then sends it to the Groupme Image Service.
-    with open(os.path.join(os.path.dirname(__file__), 'ask_images/image{}.png'.format(num)),'rb') as handle:
+    head_path = os.path.dirname(__file__)
+    wolf_img_path = 'ask_images/image{}.png'.format(num)
+    with open(os.path.join(head_path, wolf_img_path), 'rb') as handle:
         data = handle
         headers = {'X-Access-Token': access_token, 'Content-Type': 'image/png'}
         gif_response = requests.post('https://image.groupme.com/pictures', headers=headers, data=data)
