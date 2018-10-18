@@ -15,7 +15,7 @@ def reply(bot_id, msg):
     # Next, it runs the command and stores the response to the command.
     # It then checks if the response returns a list(multiple images) or a single response.
     # It then sends a POST request to your group.
-    if is_command(msg) == True:
+    if is_command(msg):
         command = msg.split()[0][1:]
         arg = msg.split()[1:]
         arg = ' '.join(arg)
@@ -41,7 +41,7 @@ def is_command(msg):
     content = []
     command = msg.split()[0]
 
-    #Parses out commands.txt file
+    # Parses out commands.txt file
     filename = (os.path.join(os.path.dirname(__file__), 'command.txt'))
     with open(filename) as f:
         for line in f:
@@ -52,6 +52,7 @@ def is_command(msg):
     else:
         return False
 
+
 def run_module(command, arg):
     """Imports the module that stores the commands and runs it"""
 
@@ -59,6 +60,7 @@ def run_module(command, arg):
     importlib.reload(module)
     response = module.main(arg)
     return response
+
 
 def send_post(bot_id, url, msg='', gif=None):
     """Sends post request,containing command response, to the Groupme-Chat"""
@@ -68,12 +70,13 @@ def send_post(bot_id, url, msg='', gif=None):
         attachment.append(gif)
 
     template = {
-        'bot_id' : bot_id,
-        'text' : msg,
-        'attachments' : attachment
+        'bot_id': bot_id,
+        'text': msg,
+        'attachments': attachment
     }
     headers = {'content-type': 'application/json'}
     response = requests.post(url, data=json.dumps(template), headers=headers)
+
 
 def split_message_send(bot_id, url, msg=''):
     """
@@ -81,21 +84,22 @@ def split_message_send(bot_id, url, msg=''):
         when the length of the message is greater than 10000
     """
 
-    if len(msg)<=1000:
+    if len(msg) <= 1000:
         send_post(bot_id, url, msg=msg)
     else:
         loops = int(math.ceil(len(msg) / 1000))
-        start=0
-        end=1000
+        start = 0
+        end = 1000
 
-        for loop in range(0,loops):
-            send_post(bot_id, url, msg[start:end] )
-            start=end
+        for loop in range(0, loops):
+            send_post(bot_id, url, msg[start:end])
+            start = end
 
-            if end+1000<len(msg):
+            if end+1000 < len(msg):
                 end = end+1000
             else:
                 end = len(msg) - 1
+
 
 def image_service_process(gif_link, num):
     """
@@ -106,16 +110,16 @@ def image_service_process(gif_link, num):
 
     # Saves the Wolfram image to ask_images directory
     with open(os.path.join(os.path.dirname(__file__), 'ask_images/image{}.png'.format(num)),'wb') as handle:
-        r = requests.get(gif_link,stream=True)
+        r = requests.get(gif_link, stream=True)
         for block in r.iter_content(1024):
             handle.write(block)
 
     # Opens the Wolfram image and then sends it to the Groupme Image Service.
     with open(os.path.join(os.path.dirname(__file__), 'ask_images/image{}.png'.format(num)),'rb') as handle:
         data = handle
-        headers = {'X-Access-Token': access_token,'Content-Type': 'image/png'}
+        headers = {'X-Access-Token': access_token, 'Content-Type': 'image/png'}
         gif_response = requests.post('https://image.groupme.com/pictures', headers=headers, data=data)
 
     png_link = json.loads(gif_response.content)['payload']['picture_url']
-    #payload = {'type': 'image', 'url': png}
+    # payload = {'type': 'image', 'url': png}
     return(png_link)
