@@ -44,7 +44,7 @@ Jenkins is a Heroku cloud-enabled bot capable of multiple commands.
 
     -analytics
 
--help sends you to the analytics dashboard.
+-analytics sends you to the analytics dashboard.
 
 ## Installation
 You need to install [Heroku Client](https://devcenter.heroku.com/articles/getting-started-with-python)
