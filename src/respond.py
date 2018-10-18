@@ -47,7 +47,7 @@ def is_command(msg):
         for line in f:
             content.append(line.rstrip('\r\n'))
 
-    if command[0]=='-' and command[1:] in content:
+    if command[0] == '-' and command[1:] in content:
         return True
     else:
         return False
