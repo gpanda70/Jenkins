@@ -13,7 +13,7 @@ def reply(bot_id, msg):
 
     # If the groupme message is a command it first split the text.
     # Next, it runs the command and stores the response to the command.
-    # It then checks if the response returns a list(multiple images) or a single response.
+    # If the response returns a list(multiple images) or a single response.
     # It then sends a POST request to your group.
     if is_command(msg):
         command = msg.split()[0][1:]
@@ -75,7 +75,7 @@ def send_post(bot_id, url, msg='', gif=None):
         'attachments': attachment
     }
     headers = {'content-type': 'application/json'}
-    response = requests.post(url, data=json.dumps(template), headers=headers)
+    requests.post(url, data=json.dumps(template), headers=headers)
 
 
 def split_message_send(bot_id, url, msg=''):
@@ -122,7 +122,9 @@ def image_service_process(gif_link, num):
     with open(os.path.join(head_path, wolf_img_path), 'rb') as handle:
         data = handle
         headers = {'X-Access-Token': access_token, 'Content-Type': 'image/png'}
-        gif_response = requests.post('https://image.groupme.com/pictures', headers=headers, data=data)
+        gif_response = requests.post('https://image.groupme.com/pictures',
+                                     headers=headers,
+                                     data=data)
 
     png_link = json.loads(gif_response.content)['payload']['picture_url']
     # payload = {'type': 'image', 'url': png}
