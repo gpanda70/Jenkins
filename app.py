@@ -1,6 +1,8 @@
-import flask
 import os
 from random import randint
+
+import flask
+
 from src.respond import reply
 
 # Global Variables
