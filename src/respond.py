@@ -109,7 +109,9 @@ def image_service_process(gif_link, num):
     access_token = os.getenv('access_token')
 
     # Saves the Wolfram image to ask_images directory
-    with open(os.path.join(os.path.dirname(__file__), 'ask_images/image{}.png'.format(num)),'wb') as handle:
+    head_path = os.path.dirname(__file__)
+    wolf_img_path = 'ask_images/image{}.png'.format(num)
+    with open(os.path.join(head_path, wolf_img_path), 'wb') as handle:
         r = requests.get(gif_link, stream=True)
         for block in r.iter_content(1024):
             handle.write(block)
