@@ -12,7 +12,7 @@ bot_id = os.getenv('bot_id')
 @server.route('/', methods=['POST'])
 def webhook():
     """
-        This function is called whenever the app's callback URL receives a POST request.
+        This function is called whenever the app's callback URL receives a POST
         In other words whenever a message is sent.
     """
     message = flask.request.get_json()  # This function contains a
