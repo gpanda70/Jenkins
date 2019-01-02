@@ -37,27 +37,24 @@ def reply(bot_id, msg):
 
 def is_command(msg):
     """Determines if the message is a command"""
+    first_word = msg.split()[0]
+    command_symbol = first_word[0]  # command_symbol should be '-'
+    command = first_word[1:]  # the command should be a command in command.txt
 
-    content = []
-    command = msg.split()[0]
-
-    # Parses out commands.txt file
     filename = (os.path.join(os.path.dirname(__file__), 'command.txt'))
     with open(filename) as f:
-        for line in f:
-            content.append(line.rstrip('\r\n'))
+        command_list = [line.rstrip('\r\n') for line in f]
 
-    if command[0] == '-' and command[1:] in content:
-        return True
-    else:
-        return False
+    is_command = command_symbol == '-' and command in command_list
+
+    return is_command
+
 
 
 def run_module(command, arg):
     """Imports the module that stores the commands and runs it"""
 
-    #module = import_module('src.commands.%s' % (command))
-    module = import_module('commands.%s' % (command))
+    module = import_module('src.commands.%s' % (command))
     importlib.reload(module)
     response = module.main(arg)
     return response
