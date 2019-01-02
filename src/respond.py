@@ -26,11 +26,11 @@ def reply(bot_id, msg):
             for num, r in enumerate(response):
                 png = image_service_process(r, num+1)
                 gif = {'type': 'image', 'url': png}
-                send_post(bot_id, url, gif=gif)
+                send_groupme_message(bot_id, url, gif=gif)
         else:
-            split_message_send(bot_id, url, response)
+            send_groupme_message(bot_id, url, response)
     elif msg[0] == '-':
-        send_post(bot_id, url, msg='This command does not exist.\nCheck -help')
+        send_groupme_message(bot_id, url, msg='This command does not exist.\nCheck -help')
     else:
         return
 
@@ -46,9 +46,7 @@ def is_command(msg):
         command_list = [line.rstrip('\r\n') for line in f]
 
     is_command = command_symbol == '-' and command in command_list
-
     return is_command
-
 
 
 def run_module(command, arg):
@@ -76,27 +74,14 @@ def send_post(bot_id, url, msg='', gif=None):
     requests.post(url, data=json.dumps(template), headers=headers)
 
 
-def split_message_send(bot_id, url, msg=''):
-    """
-        Sends post request, containing command response, to the groupme
-        when the length of the message is greater than 10000
-    """
-
-    if len(msg) <= 1000:
-        send_post(bot_id, url, msg=msg)
+def send_groupme_message(bot_id, url, msg='', gif=None):
+    SPLIT_SIZE = 1000
+    if len(msg) > 1000:
+        split_message_list = [msg[i:i+SPLIT_SIZE] for i in range(0, len(msg), SPLIT_SIZE)]
+        for split_message in split_message_list:
+            send_post(bot_id, url, split_message)
     else:
-        loops = int(math.ceil(len(msg) / 1000))
-        start = 0
-        end = 1000
-
-        for loop in range(0, loops):
-            send_post(bot_id, url, msg[start:end])
-            start = end
-
-            if end+1000 < len(msg):
-                end = end+1000
-            else:
-                end = len(msg) - 1
+        send_post(bot_id, url, msg=msg)
 
 
 def image_service_process(gif_link, num):
@@ -104,7 +89,7 @@ def image_service_process(gif_link, num):
         This function saves the wolframalpha image and processes them
         through Groupme's image service.
     """
-    #access_token = os.getenv('access_token')
+    #access_token = os.getenv('access_token')  CHANGE BACK
     access_token = 'vac7dwISDpabX9tgHVlvpHXPAuRMTHHK59AvOgOM'
 
     # Saves the Wolfram image to ask_images directory
