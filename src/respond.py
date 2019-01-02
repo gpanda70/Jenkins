@@ -56,7 +56,8 @@ def is_command(msg):
 def run_module(command, arg):
     """Imports the module that stores the commands and runs it"""
 
-    module = import_module('src.commands.%s' % (command))
+    #module = import_module('src.commands.%s' % (command))
+    module = import_module('commands.%s' % (command))
     importlib.reload(module)
     response = module.main(arg)
     return response
@@ -106,7 +107,8 @@ def image_service_process(gif_link, num):
         This function saves the wolframalpha image and processes them
         through Groupme's image service.
     """
-    access_token = os.getenv('access_token')
+    #access_token = os.getenv('access_token')
+    access_token = 'vac7dwISDpabX9tgHVlvpHXPAuRMTHHK59AvOgOM'
 
     # Saves the Wolfram image to ask_images directory
     head_path = os.path.dirname(__file__)
