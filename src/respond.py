@@ -24,6 +24,7 @@ def reply(bot_id, msg):
         # Checks to see if response is a list of urls
         if isinstance(response, list):
             for num, r in enumerate(response):
+                print('WORKKKKKKKK')
                 png = image_service_process(r, num+1)
                 gif = {'type': 'image', 'url': png}
                 send_groupme_message(bot_id, url, gif=gif)
@@ -81,7 +82,31 @@ def send_groupme_message(bot_id, url, msg='', gif=None):
         for split_message in split_message_list:
             send_post(bot_id, url, split_message)
     else:
-        send_post(bot_id, url, msg=msg)
+        print('Reg Message')
+        send_post(bot_id, url, msg=msg, gif=gif)
+
+
+def save_images(gif_link, num):
+    # Saves the Wolfram image to ask_images directory
+    head_path = os.path.dirname(__file__)
+    wolf_img_path = 'ask_images/image{}.png'.format(num)
+    with open(os.path.join(head_path, wolf_img_path), 'wb') as handle:
+        r = requests.get(gif_link, stream=True)
+        for block in r.iter_content(1024):
+            handle.write(block)
+
+
+def process_image(access_token, num):
+    # Opens the Wolfram image and then sends it to the Groupme Image Service.
+    head_path = os.path.dirname(__file__)
+    wolf_img_path = 'ask_images/image{}.png'.format(num)
+    with open(os.path.join(head_path, wolf_img_path), 'rb') as handle:
+        data = handle
+        headers = {'X-Access-Token': access_token, 'Content-Type': 'image/png'}
+        gif_response = requests.post('https://image.groupme.com/pictures',
+                                     headers=headers,
+                                     data=data)
+        return gif_response
 
 
 def image_service_process(gif_link, num):
@@ -92,24 +117,10 @@ def image_service_process(gif_link, num):
     #access_token = os.getenv('access_token')  CHANGE BACK
     access_token = 'vac7dwISDpabX9tgHVlvpHXPAuRMTHHK59AvOgOM'
 
-    # Saves the Wolfram image to ask_images directory
-    head_path = os.path.dirname(__file__)
-    wolf_img_path = 'ask_images/image{}.png'.format(num)
-    with open(os.path.join(head_path, wolf_img_path), 'wb') as handle:
-        r = requests.get(gif_link, stream=True)
-        for block in r.iter_content(1024):
-            handle.write(block)
-
-    # Opens the Wolfram image and then sends it to the Groupme Image Service.
-    head_path = os.path.dirname(__file__)
-    wolf_img_path = 'ask_images/image{}.png'.format(num)
-    with open(os.path.join(head_path, wolf_img_path), 'rb') as handle:
-        data = handle
-        headers = {'X-Access-Token': access_token, 'Content-Type': 'image/png'}
-        gif_response = requests.post('https://image.groupme.com/pictures',
-                                     headers=headers,
-                                     data=data)
+    save_images(gif_link, num)
+    gif_response = process_image(access_token, num)
 
     png_link = json.loads(gif_response.content)['payload']['picture_url']
+    print(png_link)
     # payload = {'type': 'image', 'url': png}
     return(png_link)
