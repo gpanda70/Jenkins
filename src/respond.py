@@ -111,8 +111,7 @@ def image_service_process(png_link, num):
         This function saves the wolframalpha image and processes them
         through Groupme's image service.
     """
-    #access_token = os.getenv('access_token')  CHANGE BACK
-    access_token = 'vac7dwISDpabX9tgHVlvpHXPAuRMTHHK59AvOgOM'
+    access_token = os.getenv('access_token')  CHANGE BACK
 
     save_images(png_link, num)
     png_response = process_image(access_token, num)
